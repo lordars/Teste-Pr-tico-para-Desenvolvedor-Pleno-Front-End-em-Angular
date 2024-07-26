@@ -1,0 +1,75 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-item lines="none">
+      <ion-label style="font-weight: 800; font-size: 3em;">
+        Today
+      </ion-label>
+      <p style="font-weight: 400; 
+      color:#433465;
+      ">{{today | date:'fullDate' }}</p>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card *ngFor=" let item of taskList; let i =index;" class="ion-margin">
+
+    <ion-card-header>
+      <ion-card-subtitle
+        [style.color]="item.itemPriority === 'High'? 'red' :(item.itemPriority === 'Low'? 'green':'orange')">
+        {{item.itemName}}
+      </ion-card-subtitle>
+      <ion-item>
+        <ion-icon *ngIf="item.itemPriority === 'High'" color="danger" size="small" name="ellipse"></ion-icon>
+        <ion-icon *ngIf="item.itemPriority === 'Middle'" color="warning" size="small" name="ellipse"></ion-icon>
+        <ion-icon *ngIf="item.itemPriority === 'Low'" color="success" size="small" name="ellipse"></ion-icon>
+        <ion-label>{{item.itemUser}}</ion-label>
+      </ion-item>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-label>
+        Start data {{item.itemStartData | date:'fullDate' }}
+      </ion-label>
+    </ion-card-content>
+    <ion-card-content>
+      <ion-label>
+        End data {{item.itemEndData | date:'fullDate' }}
+      </ion-label>
+    </ion-card-content>
+
+    <ion-row>
+      <ion-item>
+        <ion-icon name="share-Outline">
+        </ion-icon>
+        <p>
+          Share
+        </p>
+      </ion-item>
+
+      <ion-item button (click)="update(item)">
+        <ion-icon name="checkmark-Circle-Outline">
+        </ion-icon>
+        <p>
+          Update
+        </p>
+      </ion-item>
+
+      <ion-item button (click)="delete(item.key)">
+        <ion-icon name="trash-Outline">
+        </ion-icon>
+        <p>
+          Cancel
+        </p>
+      </ion-item>
+    </ion-row>
+  </ion-card>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addTask()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+
+
+  </ion-fab>
+</ion-content>
